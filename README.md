@@ -1,2 +1,3 @@
 # Bug-squasher-browser-game
-A Browser-based clicker game where you squash bugs and buy upgrades
+
+A browser-based clicker game where players squash bugs by clicking and purchase upgrades that help them squash bugs more efficiently.
