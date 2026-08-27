@@ -4,12 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug Squasher</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Bug Squasher</h1>
-    <h2>Under Construction</h2>
-    <p>Click on the bugs to squash them and earn points. Use points to buy upgrades!</p>
-    <p>Game coming soon...</p>
-    
+    <header>
+        <p class="site-title">Bug Squasher</p>
+        <nav>
+            <a href="index.html" aria-current="page">Play</a>
+            <a href="how-to-play.html">How to Play</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <p class="status">Production Server: OFFLINE</p>
+            <h1>The bugs took down production!</h1>
+            <p>Squash them. Earn points. Buy upgrades. Get the server back online.</p>
+        </section>
+
+        <section class="play-area">
+            <div class="stats">
+                <p>Score: <span id="score">0</span></p>
+                <p>Bugs squashed: <span id="bugs-squashed">0</span></p>
+            </div>
+
+            <button id="squash-btn" type="button">Squash Bug</button>
+            <p id="feedback">Click the button to squash a bug!</p>
+
+            <div class="upgrades">
+                <h2>Upgrades</h2>
+                <button type="button" disabled>Stronger Click (10 pts)</button>
+                <button type="button" disabled>Auto Squash (25 pts)</button>
+                <button type="button" disabled>Bug Spray (50 pts)</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>CMPA 4303 - Landon Forney - Exercise 03: DEPLOYMENT</p>
+    </footer>
+
+    <script src="js/game.js"></script>
 </body>
 </html>
