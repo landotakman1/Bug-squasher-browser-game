@@ -66,6 +66,14 @@ main {
     background: #141c13;
 }
 
+.play-arena {
+    position: relative;
+    min-height: 55vh;
+    border: 1px solid #3a4a38;
+    background: #0b100b;
+    overflow: hidden;
+}
+
 .stats {
     display: flex;
     gap: 1.5rem;
@@ -73,7 +81,11 @@ main {
 }
 
 #squash-btn {
-    margin: 1rem 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
     padding: 0.9rem 1.4rem;
     font-size: 1.1rem;
     cursor: pointer;
