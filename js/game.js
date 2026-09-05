@@ -4,14 +4,26 @@ const squashBtn = document.getElementById("squash-btn");
 const feedback = document.getElementById("feedback");
 const bugsElement = document.getElementById("bugs-squashed");
 const scoreElement = document.getElementById("score");
+const strongSquashBtn = document.getElementById("strong-squash");
 
 let score = 0;
 let bugsSquashed = 0;
 let pointsPerClick = 1;
+let strongSquashCost = 10;
+
+
+function costCheck() {
+    if (score >= strongSquashCost) {
+        strongSquashBtn.disabled = false;
+    } else {
+        strongSquashBtn.disabled = true;
+    }
+}
 
 function updateDisplay() {
     scoreElement.textContent = score;
     bugsElement.textContent = bugsSquashed;
+    costCheck();
 }
 
 function squashBug() {
@@ -21,8 +33,18 @@ function squashBug() {
     feedback.textContent = `Splat! + ${pointsPerClick}`;
 }
 
+function strongSquashUpgrade() {
+    pointsPerClick++;
+    score = score - Math.ceil(strongSquashCost);
+    strongSquashCost = strongSquashCost * 2.375;
+    strongSquashBtn.textContent = `Stronger Click (${Math.ceil(strongSquashCost)} pts)`;
+    updateDisplay();
+}
 
 
 if (squashBtn) {squashBtn.addEventListener("click", squashBug);}
 
 updateDisplay();
+
+if (strongSquashBtn) {strongSquashBtn.addEventListener("click", strongSquashUpgrade);}
+
