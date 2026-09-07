@@ -7,17 +7,20 @@ const scoreElement = document.getElementById("score");
 const strongSquashBtn = document.getElementById("strong-squash");
 const playArena = document.getElementById("play-arena");
 const autoSquashBtn = document.getElementById("auto-squash");
+const bugSprayBtn = document.getElementById("bug-spray");
 
 let score = 0;
 let bugsSquashed = 0;
 let pointsPerClick = 1;
 let strongSquashCost = 10;
 let autoSquashCost = 25;
+let bugSprayCost = 50;
 let autoSquashInterval = 4000;
 let autoSquashLevel = 0;
 let autoSquashStrengthInterval = [5, 10, 15, 20, 25];
 let autoPointsPerClick = 1;
 let autoSquashTimerId = null;
+let bugSprayBonus = 1;
 
 
 function costCheck() {
@@ -31,6 +34,12 @@ function costCheck() {
         autoSquashBtn.disabled = false;
     } else {
         autoSquashBtn.disabled = true;
+    }
+
+    if (score >= bugSprayCost) {
+        bugSprayBtn.disabled = false;
+    } else {
+        bugSprayBtn.disabled = true;
     }
 }
 
@@ -76,9 +85,19 @@ function autoSquashUpgrade() {
     if (autoSquashStrengthInterval.includes(autoSquashLevel)) {autoPointsPerClick++}
     score = score - autoSquashCost;
     startAutoSquashTimer();
-    autoSquashCost = Math.ceil(autoSquashCost * 3.75);
+    autoSquashCost = Math.ceil(autoSquashCost * 2.85);
     autoSquashBtn.textContent = `Auto Squash (${Math.ceil(autoSquashCost)} pts)`;
     autoSquashLevel++;
+    updateDisplay();
+}
+
+function bugSprayUpgrade() {
+    pointsPerClick = pointsPerClick + bugSprayBonus;
+    autoPointsPerClick = autoPointsPerClick + bugSprayBonus;
+    bugSprayBonus++;
+    score = score - bugSprayCost;
+    bugSprayCost = Math.ceil(bugSprayCost * 3.45);
+    bugSprayBtn.textContent = `Bug Spray (${Math.ceil(bugSprayCost)} pts)`;
     updateDisplay();
 }
 
@@ -99,12 +118,12 @@ function moveBug() {
 
 if (squashBtn) {squashBtn.addEventListener("click", squashBug);}
 
-updateDisplay();
 
 if (strongSquashBtn) {strongSquashBtn.addEventListener("click", strongSquashUpgrade);}
 
-updateDisplay();
 
 if (autoSquashBtn) {autoSquashBtn.addEventListener("click", autoSquashUpgrade);}
+
+if (bugSprayBtn) {bugSprayBtn.addEventListener("click", bugSprayUpgrade);}
 
 updateDisplay();
