@@ -55,6 +55,12 @@ function squashBug() {
     updateDisplay();
     feedback.textContent = `Splat! + ${pointsPerClick}`;
     moveBug();
+    squashBtn.classList.remove("is-hit");
+    void squashBtn.offsetWidth;
+    squashBtn.classList.add("is-hit");
+    setTimeout(function() {
+        squashBtn.classList.remove("is-hit");
+    }, 120);
 }
 
 function autoSquash() {
@@ -104,15 +110,15 @@ function bugSprayUpgrade() {
 function moveBug() {
     if (!playArena || !squashBtn) return;
 
-    const maxX = playArena.clientWidth - squashBtn.offsetWidth;
-    const maxY = playArena.clientHeight - squashBtn.offsetHeight;
+    const pad = 8;
+    const maxX = playArena.clientWidth - squashBtn.offsetWidth - pad * 2;
+    const maxY = playArena.clientHeight - squashBtn.offsetHeight - pad * 2;
 
-    const x = Math.floor(Math.random() * Math.max(maxX, 0));
-    const y = Math.floor(Math.random() * Math.max(maxY, 0));
+    const x = pad + Math.floor(Math.random() * Math.max(maxX, 0));
+    const y = pad + Math.floor(Math.random() * Math.max(maxY, 0));
 
     squashBtn.style.left = `${x}px`;
     squashBtn.style.top = `${y}px`;
-    squashBtn.style.transform = "none";
 }
 
 
@@ -127,3 +133,5 @@ if (autoSquashBtn) {autoSquashBtn.addEventListener("click", autoSquashUpgrade);}
 if (bugSprayBtn) {bugSprayBtn.addEventListener("click", bugSprayUpgrade);}
 
 updateDisplay();
+
+moveBug();

@@ -6,7 +6,7 @@
     <title>Bug Squasher</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="page-play">
     <header>
         <p class="site-title">Bug Squasher</p>
         <nav>
@@ -19,8 +19,6 @@
     <main>
         <section class="hero">
             <p class="status">Production Server: OFFLINE</p>
-            <h1>The bugs took down production!</h1>
-            <p>Squash them. Earn points. Buy upgrades. Get the server back online.</p>
         </section>
 
         <section class="play-area">
@@ -29,17 +27,20 @@
                 <p>Bugs squashed: <span id="bugs-squashed">0</span></p>
             </div>
 
-            <div id="play-arena" class="play-arena">
-                <button id="squash-btn" type="button">Squash Bug</button>
-            </div>
-            
-            <p id="feedback">Click the button to squash a bug!</p>
+            <div class="play-layout">
+                <div id="play-arena" class="play-arena">
+                    <button id="squash-btn" type="button">Squash Bug</button>
+                </div>
 
-            <div class="upgrades">
-                <h2>Upgrades</h2>
-                <button type="button" id="strong-squash" disabled>Stronger Click (10 pts)</button>
-                <button type="button" disabled id="auto-squash">Auto Squash (25 pts)</button>
-                <button type="button" disabled id="bug-spray">Bug Spray (50 pts)</button>
+                <div class="play-side">
+                    <p id="feedback">Click the button to squash a bug!</p>
+                    <div class="upgrades">
+                        <h2>Upgrades</h2>
+                        <button type="button" id="strong-squash" disabled>Stronger Click (10 pts)</button>
+                        <button type="button" disabled id="auto-squash">Auto Squash (25 pts)</button>
+                        <button type="button" disabled id="bug-spray">Bug Spray (50 pts)</button>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

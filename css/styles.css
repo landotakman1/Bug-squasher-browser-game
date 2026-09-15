@@ -82,13 +82,17 @@ main {
 
 #squash-btn {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     margin: 0;
     padding: 0.9rem 1.4rem;
     font-size: 1.1rem;
     cursor: pointer;
+    touch-action: manipulation;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+#squash-btn.is-hit {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 4px #8fd18a;
 }
 
 .upgrades button {
@@ -104,4 +108,54 @@ footer p {
     margin: 0;
     font-size: 0.85rem;
     color: #8a9a86;
+}
+
+.page-play main {
+    max-width: 1100px;
+}
+
+.page-play .play-area {
+    margin-top: 0.75rem;
+}
+
+.play-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.page-play .play-arena {
+    min-height: 60vh;
+    touch-action: manipulation;
+    overscroll-behavior: contain;
+}
+
+@media (min-width: 900px) {
+    .play-layout {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .page-play .play-arena {
+        flex: 1;
+        min-height: calc(100vh - 15rem);
+    }
+
+    .play-side {
+        width: 260px;
+        flex-shrink: 0;
+        padding: 1rem;
+        border: 1px solid #3a4a38;
+        background: #101810;
+    }
+
+    #feedback {
+        min-height: 3.2em;
+        margin: 0 0 0.75rem;
+    }
+
+    .play-side .upgrades button {
+        white-space: normal;
+        line-height: 1.3;
+    }
 }
