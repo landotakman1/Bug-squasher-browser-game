@@ -87,7 +87,7 @@ function startAutoSquashTimer() {
 }
 
 function autoSquashUpgrade() {
-    if (autoSquashLevel >= 1) {autoSquashInterval = autoSquashInterval * 0.95;}
+    if (autoSquashLevel >= 1) {autoSquashInterval = autoSquashInterval * 0.875;}
     if (autoSquashStrengthInterval.includes(autoSquashLevel)) {autoPointsPerClick++}
     score = score - autoSquashCost;
     startAutoSquashTimer();
