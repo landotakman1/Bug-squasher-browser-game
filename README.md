@@ -20,3 +20,7 @@ I built this to learn JavaScript the same way I already think about games (state
 ## Live Project
 
 [Play Bug Squasher](https://landotakman1.github.io/Bug-squasher-browser-game/)
+
+## Course Documentation
+
+[Assignment 02: Iteration Plan](assignment-02-iteration-plan.md)
