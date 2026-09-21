@@ -142,6 +142,11 @@ footer p {
     color: #8fd18a;
 }
 
+#feedback {
+        min-height: 3.2em;
+        margin: 0 0 0.75rem;
+    }
+
 @media (min-width: 900px) {
     .play-layout {
         flex-direction: row;
@@ -159,11 +164,6 @@ footer p {
         padding: 1rem;
         border: 1px solid #3a4a38;
         background: #101810;
-    }
-
-    #feedback {
-        min-height: 3.2em;
-        margin: 0 0 0.75rem;
     }
 
     .play-side .upgrades button {
