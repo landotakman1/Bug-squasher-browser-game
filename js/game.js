@@ -68,7 +68,6 @@ function autoSquash() {
     bugsSquashed++;
     updateDisplay();
     feedback.textContent = `Auto Splat! + ${autoPointsPerClick}`;
-    moveBug();
 }
 
 function strongSquashUpgrade() {
