@@ -8,6 +8,8 @@ const strongSquashBtn = document.getElementById("strong-squash");
 const playArena = document.getElementById("play-arena");
 const autoSquashBtn = document.getElementById("auto-squash");
 const bugSprayBtn = document.getElementById("bug-spray");
+const serverStatus = document.getElementById("server-status");
+const onlineAt = 50;
 
 let score = 0;
 let bugsSquashed = 0;
@@ -47,6 +49,16 @@ function updateDisplay() {
     scoreElement.textContent = score;
     bugsElement.textContent = bugsSquashed;
     costCheck();
+
+    if (serverStatus) {
+        if (bugsSquashed >= onlineAt) {
+            serverStatus.textContent = "Production Server: ONLINE";
+            serverStatus.classList.add("is-online");
+        } else {
+            serverStatus.textContent = "Production Server: OFFLINE";
+            serverStatus.classList.remove("is-online");
+        }
+    }
 }
 
 function squashBug() {

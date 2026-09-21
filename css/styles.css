@@ -130,6 +130,10 @@ footer p {
     overscroll-behavior: contain;
 }
 
+.status.is-online {
+    color: #8fd18a;
+}
+
 @media (min-width: 900px) {
     .play-layout {
         flex-direction: row;
