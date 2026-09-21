@@ -10,6 +10,7 @@ const autoSquashBtn = document.getElementById("auto-squash");
 const bugSprayBtn = document.getElementById("bug-spray");
 const serverStatus = document.getElementById("server-status");
 const onlineAt = 50;
+const resetBtn = document.getElementById("reset-run");
 
 let score = 0;
 let bugsSquashed = 0;
@@ -23,6 +24,69 @@ let autoSquashStrengthInterval = [5, 10, 15, 20, 25];
 let autoPointsPerClick = 1;
 let autoSquashTimerId = null;
 let bugSprayBonus = 1;
+
+
+// VERY EXPERIMENTAL FEATURE: Reset Run
+const SAVE_KEY = "bug-squasher-save";
+let allowSave = true;
+
+function saveGame() {
+    if (!allowSave) {
+        return;
+    }
+    const data = {
+        score,
+        bugsSquashed,
+        pointsPerClick,
+        strongSquashCost,
+        autoSquashCost,
+        bugSprayCost,
+        autoSquashInterval,
+        autoSquashLevel,
+        autoPointsPerClick,
+        bugSprayBonus
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+}
+
+function loadGame() {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) {
+        return;
+    }
+    const data = JSON.parse(raw);
+    score = data.score;
+    bugsSquashed = data.bugsSquashed;
+    pointsPerClick = data.pointsPerClick;
+    strongSquashCost = data.strongSquashCost;
+    autoSquashCost = data.autoSquashCost;
+    bugSprayCost = data.bugSprayCost;
+    autoSquashInterval = data.autoSquashInterval;
+    autoSquashLevel = data.autoSquashLevel;
+    autoPointsPerClick = data.autoPointsPerClick;
+    bugSprayBonus = data.bugSprayBonus;
+    
+    strongSquashBtn.textContent = `Stronger Click (${strongSquashCost} pts)`;
+    autoSquashBtn.textContent = `Auto Squash (${autoSquashCost} pts)`;
+    bugSprayBtn.textContent = `Bug Spray (${bugSprayCost} pts)`;
+}
+
+function resetRun() {
+    const ok = confirm("Wipe this run? Score, upgrades, and auto-timer will all reset.");
+    if (!ok) {
+        return;
+    }
+
+    allowSave = false;
+
+    if (autoSquashTimerId !== null) {
+        clearInterval(autoSquashTimerId);
+        autoSquashTimerId = null;
+    }
+    
+    localStorage.removeItem(SAVE_KEY);
+    location.reload();
+}
 
 
 function costCheck() {
@@ -59,6 +123,7 @@ function updateDisplay() {
             serverStatus.classList.remove("is-online");
         }
     }
+    saveGame();
 }
 
 function squashBug() {
@@ -132,9 +197,9 @@ function moveBug() {
     squashBtn.style.top = `${y}px`;
 }
 
+if (resetBtn) {resetBtn.addEventListener("click", resetRun);}
 
 if (squashBtn) {squashBtn.addEventListener("click", squashBug);}
-
 
 if (strongSquashBtn) {strongSquashBtn.addEventListener("click", strongSquashUpgrade);}
 
@@ -143,6 +208,10 @@ if (autoSquashBtn) {autoSquashBtn.addEventListener("click", autoSquashUpgrade);}
 
 if (bugSprayBtn) {bugSprayBtn.addEventListener("click", bugSprayUpgrade);}
 
+loadGame();
 updateDisplay();
-
 moveBug();
+
+if (autoSquashLevel >= 1) {
+    startAutoSquashTimer();
+}

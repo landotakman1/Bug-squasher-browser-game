@@ -145,7 +145,19 @@ footer p {
 #feedback {
         min-height: 3.2em;
         margin: 0 0 0.75rem;
-    }
+}
+
+.reset-btn {
+    margin-top: 5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #3a4a38;
+}
+
+.reset-btn button {
+    width: 100%;
+    padding: 0.6rem;
+    cursor: pointer;
+}
 
 @media (min-width: 900px) {
     .play-layout {
