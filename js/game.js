@@ -1,5 +1,6 @@
 console.log("Bug Squasher Loading...");
 
+
 const squashBtn = document.getElementById("squash-btn");
 const feedback = document.getElementById("feedback");
 const bugsElement = document.getElementById("bugs-squashed");
@@ -11,6 +12,10 @@ const bugSprayBtn = document.getElementById("bug-spray");
 const serverStatus = document.getElementById("server-status");
 const onlineAt = 50;
 const resetBtn = document.getElementById("reset-run");
+const bugPad = 8;
+const bugSpeedMin = 0.7;
+const bugSpeedMax = 1.4;
+
 
 let score = 0;
 let bugsSquashed = 0;
@@ -24,11 +29,17 @@ let autoSquashStrengthInterval = [5, 10, 15, 20, 25];
 let autoPointsPerClick = 1;
 let autoSquashTimerId = null;
 let bugSprayBonus = 1;
+let bugX = 0;
+let bugY = 0;
+let bugVX = 0.8;
+let bugVY = 0.6;
+
 
 
 // VERY EXPERIMENTAL FEATURE: Reset Run
 const SAVE_KEY = "bug-squasher-save";
 let allowSave = true;
+
 
 function saveGame() {
     if (!allowSave) {
@@ -88,6 +99,22 @@ function resetRun() {
     location.reload();
 }
 
+
+function bugBounds() {
+    const maxX = playArena.clientWidth - squashBtn.offsetWidth - bugPad * 2;
+    const maxY = playArena.clientHeight - squashBtn.offsetHeight - bugPad * 2;
+    return {
+        minX: bugPad,
+        minY: bugPad,
+        maxX: bugPad + Math.max(maxX, 0),
+        maxY: bugPad + Math.max(maxY, 0)
+    };
+}
+
+function paintBug() {
+    squashBtn.style.left = `${bugX}px`;
+    squashBtn.style.top = `${bugY}px`;
+}
 
 function costCheck() {
     if (score >= strongSquashCost) {
@@ -186,16 +213,45 @@ function bugSprayUpgrade() {
 function moveBug() {
     if (!playArena || !squashBtn) return;
 
-    const pad = 8;
-    const maxX = playArena.clientWidth - squashBtn.offsetWidth - pad * 2;
-    const maxY = playArena.clientHeight - squashBtn.offsetHeight - pad * 2;
+    const b = bugBounds();
+    bugX = b.minX + Math.floor(Math.random() * Math.max(b.maxX - b.minX, 0));
+    bugY = b.minY + Math.floor(Math.random() * Math.max(b.maxY - b.minY, 0));
 
-    const x = pad + Math.floor(Math.random() * Math.max(maxX, 0));
-    const y = pad + Math.floor(Math.random() * Math.max(maxY, 0));
+    const speed = bugSpeedMin + Math.random() * (bugSpeedMax - bugSpeedMin);
+    const angle = Math.random() * Math.PI * 2;
+    bugVX = Math.cos(angle) * speed;
+    bugVY = Math.sin(angle) * speed;
 
-    squashBtn.style.left = `${x}px`;
-    squashBtn.style.top = `${y}px`;
+    paintBug();
 }
+
+function slideBug() {
+    if (!playArena || !squashBtn) return;
+
+    const b = bugBounds();
+    bugX += bugVX;
+    bugY += bugVY;
+
+    if (bugX <= b.minX || bugX >= b.maxX) {
+        bugVX = -bugVX;
+        bugX = Math.min(Math.max(bugX, b.minX), b.maxX);
+    }
+    if (bugY <= b.minY || bugY >= b.maxY) {
+        bugVY = -bugVY;
+        bugY = Math.min(Math.max(bugY, b.minY), b.maxY);
+    }
+
+    paintBug();
+}
+
+function startBugLoop() {
+    function loop() {
+        slideBug();
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+}
+
 
 if (resetBtn) {resetBtn.addEventListener("click", resetRun);}
 
@@ -203,14 +259,16 @@ if (squashBtn) {squashBtn.addEventListener("click", squashBug);}
 
 if (strongSquashBtn) {strongSquashBtn.addEventListener("click", strongSquashUpgrade);}
 
-
 if (autoSquashBtn) {autoSquashBtn.addEventListener("click", autoSquashUpgrade);}
 
 if (bugSprayBtn) {bugSprayBtn.addEventListener("click", bugSprayUpgrade);}
 
+
 loadGame();
 updateDisplay();
 moveBug();
+startBugLoop();
+
 
 if (autoSquashLevel >= 1) {
     startAutoSquashTimer();
