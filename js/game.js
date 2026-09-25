@@ -36,6 +36,12 @@ let bugVY = 0.6;
 
 
 
+function playSplat() {
+    const tick = new Audio("sounds/universfield-slime-impact-352473.mp3");
+    tick.volume = 0.1;
+    tick.play().catch(function () {});
+}
+
 // VERY EXPERIMENTAL FEATURE: Reset Run
 const SAVE_KEY = "bug-squasher-save";
 let allowSave = true;
@@ -165,6 +171,8 @@ function squashBug() {
     setTimeout(function() {
         squashBtn.classList.remove("is-hit");
     }, 120);
+
+    playSplat();
 }
 
 function autoSquash() {
